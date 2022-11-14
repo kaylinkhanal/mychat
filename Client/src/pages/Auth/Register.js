@@ -1,5 +1,5 @@
 const Register = ()=> {
-  return <h1>hello i am Register</h1>
+  return <input placeholder = "name"/>
 }
 
 export default Register
