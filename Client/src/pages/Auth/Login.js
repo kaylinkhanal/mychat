@@ -3,9 +3,11 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {Link, useNavigate} from 'react-router-dom';
 import '../../assets/styles/login-styles.css'
+import {useDispatch, useSelector} from "react-redux";
+import {setCredentials} from '../../reducers/userSlice'
 
 const Login = () => {
-
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const initalValues = {
     phoneNumber : '',
@@ -29,6 +31,7 @@ const Login = () => {
           resetForm()
           console.log(data.userData)
           navigate('/home')
+          dispatch(setCredentials(data.userData))
           // ---- login success redirect page ---------- TODO
 
         } else {
