@@ -1,10 +1,12 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import {Link, useNavigate} from 'react-router-dom';
 import '../../assets/styles/login-styles.css'
 
 const Login = () => {
 
+  const navigate = useNavigate();
   const initalValues = {
     phoneNumber : '',
     password: ''
@@ -26,7 +28,7 @@ const Login = () => {
         if (data.success) {
           resetForm()
           console.log(data.userData)
-
+          navigate('/home')
           // ---- login success redirect page ---------- TODO
 
         } else {
