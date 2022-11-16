@@ -9,10 +9,11 @@ import Register from "./pages/Auth/Register";
 import './App.css'
 const App = () => {
   return (
-    <div className="container">
+    <div>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={<Login/>} />
       </Routes>
     </div>
   );
