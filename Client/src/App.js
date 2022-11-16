@@ -1,12 +1,10 @@
-import Login from "./pages/Auth/Login";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Auth/Register";
-import './App.css'
+import Login from "./pages/Auth/Login";
+import UserChat from "./pages/Chat/userChat";
+
+
+import "./App.css";
 const App = () => {
   return (
     <div>
@@ -14,6 +12,8 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/home" element={<UserChat />} />
+        {/* <Route path="/register" element={<Register />} /> */}
       </Routes>
     </div>
   );
