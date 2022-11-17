@@ -17,11 +17,16 @@ const userSlice = createSlice({
         state.phoneNumber = phoneNumber
         state.token = token
     },
-    setLogout: (state,actions)=>{
-   
+    setLogout: (state)=>{
+      localStorage.removeItem('token')
+      state.username = null
+      state.phoneNumber = null
+      state.token=null
     },
   }
 });
 
-export const { setCredentials } = userSlice.actions;
+export const { setCredentials,setLogout } = userSlice.actions;
+
+
 export default userSlice.reducer;

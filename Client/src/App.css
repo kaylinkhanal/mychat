@@ -61,6 +61,18 @@
     cursor: pointer;
     font-size: large;
   }
+  .loginp{
+    display:flex;
+  }
+  .loginp button{
+    padding: 8px;
+    background-color: #f4f8f6;
+    color: black;
+    border-radius: 13px;
+    margin-left: auto;
+    margin-top: 5px;
+    margin-right: 4px;
+  }
   
   .App-header {
     background-color: #282c34;
