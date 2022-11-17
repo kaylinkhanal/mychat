@@ -13,6 +13,20 @@ const registerRouter = require("./Controller/registerRouter");
 const loginRouter = require("./Controller/loginRouter");
 const usersRouter = require("./Controller/usersRouter");
 
+const http = require('http');
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+    pingTimeout: 30000,
+    cors: {
+      origin: '*',
+    }
+  });
+
+io.on('connection', (socket) => {
+    socket.on('chat', (msg) => {
+      io.send('message', msg)
+    });
+});
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
@@ -20,6 +34,6 @@ app.use("/users", usersRouter);
 
 
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Chat Server listening on port ${process.env.PORT}`);
 });

@@ -1,12 +1,29 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:3001");
 function Chat() {
   const { currentSelectedUserDetails } = useSelector((state) => state.message);
-  const [message, setMessage] = useState('')
-  const triggerMessageSend = () => {
-    console.log(message)
-  }
 
+useEffect(()=>{
+  socket.on('connection', ()=>{
+      console.log("connected to server")
+  })
+},[])
+
+useEffect(()=>{
+  socket.on('message', function(data, json) {
+    console.log(data, json);
+  });
+})
+
+
+const triggerMessageSend=()=>{
+  socket.emit('chat', message )
+}
+  const [message, setMessage] = useState('')
+ 
   return (
     <>
     <div className='chat'>
