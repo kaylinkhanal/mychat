@@ -18,7 +18,6 @@ const userSlice = createSlice({
         state.token = token
     },
     setLogout: (state)=>{
-      localStorage.removeItem('token')
       state.username = null
       state.phoneNumber = null
       state.token=null
