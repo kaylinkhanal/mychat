@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const users=require('../Model/usersSchema')
 const jwt = require('jsonwebtoken')
 
@@ -20,10 +21,23 @@ router.post('/', async (req, res)=>{
         }
         else{
             // -------- compare hashed password matchh TODO-----
+            bcrypt.compare(req.body.password, userRecord.password, function (err, result) {
+            if (err) {
+                res.status(403).json({
+                success: false,
+                error: err.message
+                })
+            }
 
-            if(password === userRecord.password)
-            {
-                const token = await jwt.sign({ phoneNumber: phoneNumber }, `${process.env.JWT_TOKEN}`);
+            if (!result) {
+                res.status(401).json({
+                success: false,
+                error: {
+                    password: 'Password does not match'
+                }
+                })
+            } else {
+                const token = jwt.sign({ phoneNumber: phoneNumber }, `${process.env.JWT_TOKEN}`);
 
                 res.json({
                     success: true,
@@ -34,14 +48,8 @@ router.post('/', async (req, res)=>{
                     }
                 })
             }
-            else{
-                res.status(400).json({
-                    success: false,
-                    error: {
-                        password: 'Password incorrect'
-                    }
-                })
-            }
+            })
+
         }  
 
     }catch(error){
