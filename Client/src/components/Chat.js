@@ -5,6 +5,8 @@ import io from 'socket.io-client';
 const socket = io("http://localhost:3001");
 function Chat() {
   const { currentSelectedUserDetails } = useSelector((state) => state.message);
+  const {username} = useSelector(state=> state.users)
+  const [msgList, setMsgList] = useState([])
 
 useEffect(()=>{
   socket.on('connection', ()=>{
@@ -14,26 +16,54 @@ useEffect(()=>{
 
 useEffect(()=>{
   socket.on('message', function(data, json) {
-    console.log(data, json);
+    const originalMsgList = msgList
+    originalMsgList.push(json)
+    console.log(originalMsgList)
+    setMsgList(originalMsgList)
   });
 })
-
+const [message, setMessage] = useState('')
 
 const triggerMessageSend=()=>{
-  socket.emit('chat', message )
+  socket.emit('chat', { sentBy: username , 
+  recepient: currentSelectedUserDetails.username,
+  date: Date.now(),
+  message: message
+  })
 }
-  const [message, setMessage] = useState('')
- 
+
+//  const usersList = [{sentBy: 'kyalin', message: 'hello k cha nimisha'},
+//  {sentBy: 'nimisha', message: 'thik cha sir'},
+//  {sentBy: 'nimisha', message: 'tapai ko k cha'}
+// ]
   return (
-    <>
+    <div>
     <div className='chat'>
       <div>
       {currentSelectedUserDetails.username}
       </div>
-        <input placeholder="message" onKeyUp={(e)=>setMessage(e.target.value)}/>
-        <button onClick={()=>triggerMessageSend()}>send </button>
+
+      {JSON.stringify(msgList)}
+      {msgList.map((item,idx)=>{
+            return (
+              <div style={{backgroundColor: 
+                currentSelectedUserDetails.username === item.sentBy 
+                ? 'aqua' : 'grey',
+                  height:'50px',
+                  margin:'10px',
+                  marginRight: currentSelectedUserDetails.username === item.sentBy ? '50px' : null}}
+                 >
+                {item.message}
+              </div>
+            )
+      })}
+      
     </div>
-    </>
+    <div>
+    <input placeholder="message" onKeyUp={(e)=>setMessage(e.target.value)}/>
+    <button onClick={()=>triggerMessageSend()}>send </button>
+    </div>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ function Search() {
     const dispatch = useDispatch()
     const [username, setUsername] = useState('')
     const {allUsers} = useSelector(state=> state.message)
-
+    const { currentSelectedUserDetails } = useSelector((state) => state.message);
     const getUsername = (e) => {
         console.log(e)
     }
@@ -32,7 +32,9 @@ function Search() {
         {allUsers?.map((item,id)=>{
             return <div 
             onClick={()=> dispatch(setUserSelectedDetails(item))} 
-            className="userChat">
+            className="userChat"
+            style={{backgroundColor: currentSelectedUserDetails.username === item.username ? 'purple': null}}
+            >
             <img src='https://previews.123rf.com/images/anwarsikumbang/anwarsikumbang1502/anwarsikumbang150200446/36649713-man-avatar-user-picture-cartoon-character-vector-illustration.jpg' alt="" />
             <div className="userChatInfo">
                 <span>{item.username}</span>
