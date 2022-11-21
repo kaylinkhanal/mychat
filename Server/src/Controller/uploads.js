@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const img = require("../Model/imgSchema");
 
 //multer file image upload
 const multer = require("multer");

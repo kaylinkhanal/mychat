@@ -8,7 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const collectData = async () => {
-    let result = await fetch("http://localhost:3001/register", {
+    let result = await fetch("http://localhost:3000/register", {
       method: "post",
       body: JSON.stringify({ username, password, phoneNumber: number, email }),
       headers: {
